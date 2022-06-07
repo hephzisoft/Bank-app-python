@@ -64,18 +64,23 @@ Thanks for using Hephzi Bank.
         while True:
             self.phone_number = input("Phone Number: ")
             if len(self.phone_number) == 11:
-                break
-            #  to terminate
-            elif self.input_num == self.input_trail:
+                try:
+                    validate_phone_number = int(self.phone_number)
+                    break
+                except ValueError:
+                    print(f'You have {self.input_trail} chances')
+                    print("Age should be a number")
+
+            if self.input_num == self.input_trail:
                 print("""
-Sorry the program got terminated
-Thanks for using Hephzi Bank.
-                                                """)
+             Sorry the program got terminated
+            Thanks for using Hephzi Bank.
+                                                            """)
                 sys.exit()
             else:
                 print(f'You have {self.input_trail} chances')
-                print("Phone number should be 11 digits e.g 09012345678")
-
+                print("Phone number should be 11 digits")
+            self.input_trail -= 1
         print("""
 Your Account is pending to be verified 
 ==========================
