@@ -17,6 +17,7 @@ class Bank:
     full_name = f"{firstName} {secondName} {middleName}"
     account_number = random.randint(1000000000, 9999999999)
     time = datetime.datetime.now()
+    real_time = time.strftime("%d-%a-%b-%Y at %H:%M:%S %p")
 
     def account_opening(self):
         self.firstName = input("First Name: ").capitalize()
@@ -40,6 +41,7 @@ Thanks for using Hephzi Bank.
                     print(f'You have {self.input_trail} chances')
                     print("Age should be greater than 5")
             except ValueError:
+                print(f'You have {self.input_trail} chances')
                 print("Age should be a number")
             self.input_trail -= 1
         self.input_trail = 3
@@ -95,7 +97,31 @@ Create a pin that will be used for all transactions
         """)
         self.create_pin()
         self.deposit()
-        self.transfer()
+        while True:
+            select = (input("""
+1. Deposit 
+2. Transfer
+3. Change pin
+4. Check Account Information
+"""))
+
+            try:
+                valid_select = int(select)
+                if valid_select == 1:
+                    self.deposit()
+                elif valid_select == 2:
+                    self.transfer()
+
+                elif valid_select == 3:
+                    self.change_pin()
+
+                elif valid_select == 4:
+                    self.check_account_information()
+
+                else:
+                    print("Invalid option")
+            except ValueError:
+                print("Invalid input")
 
     def create_pin(self):
         while True:
@@ -106,10 +132,38 @@ Create a pin that will be used for all transactions
                     new_pin = int(self.pin)
                     confirm = int(confirm_pin)
                     if new_pin == confirm:
-                        print("Pin Created")
                         print("Creating pin ..............")
+                        print("Pin Created")
                         print(f"Your pin is {confirm}")
                         break
+                    else:
+                        print("Pin do not match")
+                except ValueError:
+                    print("Your pin should be 4digit not alphabets or alphanumeric")
+
+            else:
+                print("Your pin should be 4 digits")
+
+    def change_pin(self):
+        while True:
+            old_pin = input("Enter Old pin: ")
+            new_pin = input("Enter New pin: ")
+            confirm_pin = input("Confirm  New pin: ")
+
+            if len(old_pin) == 4:
+                try:
+                    confirm_old_pin = int(old_pin)
+                    confirm_new_pin = int(new_pin)
+                    confirming = int(confirm_pin)
+                    if self.pin == old_pin:
+                        if confirming == confirm_new_pin:
+
+                            print("Changing pin ..............")
+                            print("Pin Changed")
+                            print(f"Your pin is {confirming}")
+                            break
+                        else:
+                            print("Pin do not match")
                     else:
                         print("Pin do not match")
                 except ValueError:
@@ -149,7 +203,7 @@ Amount sent: {amount}
 Account Balance: {self.mainBalance}
 Account Name: {self.full_name} 
 Account No: {self.account_number}
-Date: {self.time}
+Date: {self.real_time}
         """)
 
     def transfer(self):
@@ -194,5 +248,17 @@ Account Balance: {self.mainBalance}
 Receiver Name: {sender_name} 
 Receiver Bank: {bank_name}
 Receiver Account No: {sender_account_no}
-Date: {self.time}
+Date: {self.real_time}
 """)
+
+    def check_account_information(self):
+        print(f"""
+Your Details are:
+Name: {self.full_name}
+Age: {self.age}
+Gender: {self.gender}
+Phone Number : {self.phone_number}
+Account Number: {self.account_number}
+Account Balance: ${self.mainBalance}
+Bank Name: Hephzi Bank
+                """)
