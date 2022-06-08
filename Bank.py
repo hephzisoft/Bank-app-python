@@ -81,6 +81,7 @@ Thanks for using Hephzi Bank.
                 print(f'You have {self.input_trail} chances')
                 print("Phone number should be 11 digits")
             self.input_trail -= 1
+            self.input_trail = 3
         print("""
 Your Account is pending to be verified 
 ==========================
@@ -101,13 +102,14 @@ Account Balance: ${self.mainBalance}
 Create a pin that will be used for all transactions
         """)
         self.create_pin()
+        print("Money has to be added to the account")
         self.deposit()
         while True:
             select = (input("""
 1. Deposit 
 2. Transfer
 3. Change pin
-4. Check Account Information
+4. Check Account Information  
 """))
 
             try:
@@ -160,22 +162,27 @@ Create a pin that will be used for all transactions
                     confirm_old_pin = int(old_pin)
                     confirm_new_pin = int(new_pin)
                     confirming = int(confirm_pin)
-                    if self.pin == old_pin:
-                        if confirming == confirm_new_pin:
+                    if self.pin == old_pin and confirming == confirm_new_pin and confirm_old_pin != confirming:
 
-                            print("Changing pin ..............")
-                            print("Pin Changed")
-                            print(f"Your pin is {confirming}")
-                            break
-                        else:
-                            print("Pin do not match")
+                        print("Changing pin ..............")
+                        print("Pin Changed")
+                        print(f"Your pin is {confirming}")
+                        self.pin = new_pin
+                        break
+                    elif self.input_num == self.input_trail:
+                        print("Sorry this process is terminated")
+                        break
                     else:
-                        print("Pin do not match")
+                        print(f'You have {self.input_trail} chances')
+                        print("Pin do not match or Pin is the same as the old one")
                 except ValueError:
+                    print(f'You have {self.input_trail} chances')
                     print("Your pin should be 4digit not alphabets or alphanumeric")
 
             else:
+                print(f'You have {self.input_trail} chances')
                 print("Your pin should be 4 digits")
+            self.input_trail -= 1
 
     def deposit(self):
         while True:
@@ -195,11 +202,17 @@ Create a pin that will be used for all transactions
                 if validate_pin == self.pin:
                     print("Pin ok")
                     break
+                elif self.input_num == self.input_trail:
+                    print("Sorry this process has been terminated")
+                    break
                 else:
+                    print(f'You have {self.input_trail} chances')
                     print("Pin is wrong")
 
             except ValueError:
+                print(f'You have {self.input_trail} chances')
                 print("Your pin should be 4digit not alphabets or alphanumeric")
+            self.input_trail -= 1
 
         self.mainBalance = new_balance
         print(f"""
