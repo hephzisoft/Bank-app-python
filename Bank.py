@@ -204,7 +204,7 @@ Create a pin that will be used for all transactions
                     break
                 elif self.input_num == self.input_trail:
                     print("Sorry this process has been terminated")
-                    break
+                    sys.exit()
                 else:
                     print(f'You have {self.input_trail} chances')
                     print("Pin is wrong")
@@ -213,7 +213,6 @@ Create a pin that will be used for all transactions
                 print(f'You have {self.input_trail} chances')
                 print("Your pin should be 4digit not alphabets or alphanumeric")
             self.input_trail -= 1
-
         self.mainBalance = new_balance
         print(f"""
 Money has been successfully added  ....
@@ -244,7 +243,7 @@ Date: {self.real_time}
                 except ValueError:
                     print("Account number must be digits and not alphabets")
             else:
-                print("Account Number must be 11 digits")
+                print("Account Number must be 10 digits")
         new_balance = self.mainBalance - valid_amount
         self.mainBalance = new_balance
         while True:
@@ -254,13 +253,19 @@ Date: {self.real_time}
                 if validate_pin == self.pin:
                     print("Pin ok")
                     break
+                elif self.input_num == self.input_trail:
+                    print("Sorry this process has been terminated")
+                    sys.exit()
                 else:
+                    print(f'You have {self.input_trail} chances')
                     print("Pin is wrong")
 
             except ValueError:
+                print(f'You have {self.input_trail} chances')
                 print("Your pin should be 4digit not alphabets or alphanumeric")
+            self.input_trail -= 1
         print(f"""
-Money has been successfully sent  ....
+Money has been successfully sent  .... 
 Amount sent: {amount}
 Account Balance: {self.mainBalance}
 Receiver Name: {sender_name} 
