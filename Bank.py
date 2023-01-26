@@ -34,7 +34,7 @@ class Bank:
                 elif self.input_num == self.input_trail:
                     print("""
 Sorry the program got terminated
-Thanks for using Hephzi Bank.
+Thanks for trying  Hephzi Bank.
                                     """)
                     sys.exit()
                 else:
